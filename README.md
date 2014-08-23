@@ -17,7 +17,7 @@ the second element of `bar` can be accessed by:
 ```
 result, err := Fetch.Fetch(".foo.bar[2]", obj)
 ```
-All queries must start with `.`, as this is refers to the object that is passed to go-fetch. Making a query of simple `.` will return the entire object itself.
+All queries must start with `.`, as this is refers to the value that is passed to go-fetch. Making a query of simple `.` will return the entire value itself.
 
 go-fetch supports bracket accessors for maps as well, so if you need to access a key that has characters (such as a `.`) that need to be avoided, you can do so:
 
