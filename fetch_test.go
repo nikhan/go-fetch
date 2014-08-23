@@ -311,3 +311,65 @@ func BenchmarkNoFetch(b *testing.B) {
 		}
 	}
 }
+
+func BenchmarkNoFetchNoCheck(b *testing.B) {
+	testFile, _ := ioutil.ReadFile("test.json")
+
+	var umsg struct {
+		A struct {
+			B struct {
+				C []struct {
+					D struct {
+						E int64 `json:"e"`
+					} `json:"d"`
+				} `json:"c"`
+			} `json:"b"`
+		} `json:"a"`
+		ArrayFloat []interface{} `json:"arrayFloat"`
+		ArrayInt   []int64       `json:"arrayInt"`
+		ArrayObj   []struct {
+			Array  []int64 `json:"array"`
+			Bool   bool    `json:"bool"`
+			HasKey bool    `json:"hasKey"`
+			Name   string  `json:"name"`
+			Nested []struct {
+				Id string `json:"id"`
+				No string `json:"no"`
+			} `json:"nested"`
+			Nil     interface{} `json:"nil"`
+			SameNum int64       `json:"sameNum"`
+			SameStr string      `json:"sameStr"`
+			Val     interface{} `json:"val"`
+		} `json:"arrayObj"`
+		ArrayString []string      `json:"arrayString"`
+		Bool        bool          `json:"bool"`
+		Empty       []interface{} `json:"empty"`
+		Escapekey   struct {
+			Nested struct {
+				Foobar string `json:"foo.bar"`
+			} `json:"nested"`
+		} `json:"escape.key"`
+		Float    float64 `json:"float"`
+		FloatStr string  `json:"float_str"`
+		Int      int64   `json:"int"`
+		K        int64   `json:"#_k__"`
+		Nested   struct {
+			Baz []int64 `json:"baz"`
+			Foo struct {
+				Zip string `json:"zip"`
+			} `json:"foo"`
+		} `json:"nested"`
+		Nil    interface{} `json:"nil"`
+		String string      `json:"string"`
+		Two    int64       `json:"two"`
+	}
+
+	json.Unmarshal(testFile, &umsg)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		o := umsg.ArrayObj[2].Nested[0].Id
+		if o == "id" {
+		}
+	}
+}

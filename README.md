@@ -41,9 +41,10 @@ for{
 
 
 ```
-BenchmarkFetch              200000          18448 ns/op
-BenchmarkFetchParseOnce     10000000          177 ns/op
-BenchmarkNoFetch            20000000          112 ns/op
+BenchmarkFetch	  			  200000	     17522 ns/op
+BenchmarkFetchParseOnce		10000000	       169 ns/op
+BenchmarkNoFetch			20000000	       112 ns/op
+BenchmarkNoFetchNoCheck	   500000000	      3.14 ns/op
 ```
 
-The above benchmarks were run on a 2010 Macbook Pro. `BenchmarkFetch` is running `Fetch.Fetch()`. You can see that parsing the query every time can be costly. The second benchmark, `BenchmarkFetchParseOnce` compiles the query once with `Fetch.Parse()`. Finally `BenchmarkNoFetch` is testing the time it takes to do all of the assertions and checking one would need to do when accessing a deeply nested value.
+The above benchmarks were run on a 2010 Macbook Pro. `BenchmarkFetch` is running `Fetch.Fetch()`. You can see that parsing the query every time can be costly. The second benchmark, `BenchmarkFetchParseOnce` compiles the query once with `Fetch.Parse()`.  `BenchmarkNoFetch` is testing the time it takes to do all of the assertions on a map of interfaces{}. Finally, `BenchmarkNoFetchNoCheck` is what happens when dealing with properly typed structs.
