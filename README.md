@@ -46,4 +46,4 @@ BenchmarkFetchParseOnce     10000000          177 ns/op
 BenchmarkNoFetch            20000000          112 ns/op
 ```
 
-The above benchmarks were ran on a 2010 Macbook Pro. `BenchmarkFetch` is running `Fetch.Fetch()`. You can see that parsing the query every time can be costly. The second benchmark, `BenchmarkFetchParseOnce` compiles the query once with `Fetch.Parse()`. Finally `BenchmarkNoFetch` is testing the time it takes to do all of the assertions and checking one would need to do when accessing a deeply nested value.
+The above benchmarks were run on a 2010 Macbook Pro. `BenchmarkFetch` is running `Fetch.Fetch()`. You can see that parsing the query every time can be costly. The second benchmark, `BenchmarkFetchParseOnce` compiles the query once with `Fetch.Parse()`. Finally `BenchmarkNoFetch` is testing the time it takes to do all of the assertions and checking one would need to do when accessing a deeply nested value.
