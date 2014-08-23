@@ -20,8 +20,7 @@ type DotTest struct {
 }
 
 type FailTest struct {
-	exp    string
-	result string
+	exp string
 }
 
 var Tests = []Test{
@@ -139,96 +138,73 @@ var DotTests = []DotTest{
 
 var FailTests = []FailTest{
 	FailTest{
-		exp:    ` .`,
-		result: `"hello"`,
+		exp: ` .`,
 	},
 	FailTest{
-		exp:    `. `,
-		result: `"hello"`,
+		exp: `. `,
 	},
 	FailTest{
-		exp:    `.missingkey`,
-		result: `"hello"`,
+		exp: `.missingkey`,
 	},
 	FailTest{
-		exp:    `.#_k__`,
-		result: `"hello"`,
+		exp: `.#_k__`,
 	},
 	FailTest{
-		exp:    `.[0]`,
-		result: `"hello"`,
+		exp: `.[0]`,
 	},
 	FailTest{
-		exp:    `.["arrayObj`,
-		result: `"hello"`,
+		exp: `.["arrayObj`,
 	},
 	FailTest{
-		exp:    `.arrayObj"]`,
-		result: `"hello"`,
+		exp: `.arrayObj"]`,
 	},
 	FailTest{
-		exp:    `.arrayObj]`,
-		result: `"hello"`,
+		exp: `.arrayObj]`,
 	},
 	FailTest{
-		exp:    `.[]`,
-		result: `"hello"`,
+		exp: `.[]`,
 	},
 	FailTest{
-		exp:    `.[[][]]`,
-		result: `"hello"`,
+		exp: `.[[][]]`,
 	},
 	FailTest{
-		exp:    `"jdsjdskdjsjs`,
-		result: `"hello"`,
+		exp: `"jdsjdskdjsjs`,
 	},
 	FailTest{
-		exp:    `?!.foo`,
-		result: `"hello"`,
+		exp: `?!.foo`,
 	},
 	FailTest{
-		exp:    `.['escape.key']['nested']["foo.bar']`,
-		result: `"hello"`,
+		exp: `.['escape.key']['nested']["foo.bar']`,
 	},
 	FailTest{
-		exp:    `.['escape.key']['nested'].["foo.bar"]`,
-		result: `"hello"`,
+		exp: `.['escape.key']['nested'].["foo.bar"]`,
 	},
 	FailTest{
-		exp:    `...`,
-		result: `"hello"`,
+		exp: `...`,
 	},
 	FailTest{
-		exp:    `.['escape.key'].['nested'].["foo.bar"]`,
-		result: `"hello"`,
+		exp: `.['escape.key'].['nested'].["foo.bar"]`,
 	},
 	FailTest{
-		exp:    `.['escape.key']['nested'].["foo.bar"].`,
-		result: `"hello"`,
+		exp: `.['escape.key']['nested'].["foo.bar"].`,
 	},
 	FailTest{
-		exp:    `.['arrayString' arrayString].`,
-		result: `"hello"`,
+		exp: `.['arrayString' arrayString].`,
 	},
 	FailTest{
-		exp:    `.['arrayString' 'arrayString'].`,
-		result: `"hello"`,
+		exp: `.['arrayString' 'arrayString'].`,
 	},
 	FailTest{
-		exp:    `.['arrayString''arrayString'].`,
-		result: `"hello"`,
+		exp: `.['arrayString''arrayString'].`,
 	},
 	FailTest{
-		exp:    `.['arrayString'2].`,
-		result: `"hello"`,
+		exp: `.['arrayString'2].`,
 	},
 	FailTest{
-		exp:    `.[22!2].`,
-		result: `"hello"`,
+		exp: `.[22!2].`,
 	},
 	FailTest{
-		exp:    `.[['arrayString']].`,
-		result: `"hello"`,
+		exp: `.[['arrayString']].`,
 	},
 }
 
@@ -278,19 +254,14 @@ func TestAll(t *testing.T) {
 	}
 
 	for _, test := range FailTests {
-		err := json.Unmarshal([]byte(test.result), &r)
-		if err != nil {
-			t.Error(err, "bad test")
-		}
-
-		_, err = Fetch(test.exp, m)
+		_, err := Fetch(test.exp, m)
 		if err != nil {
 			fmt.Println("\x1b[32;1m✓\x1b[0m", test.exp)
 			fmt.Println(err.Error())
 		} else {
 			t.Fail()
-			fmt.Println("\x1b[31;1m", "✕", "\x1b[0m", r, "\t", test.exp)
-			fmt.Println("Expected Value", r, "\tExpression Value:", test.exp)
+			fmt.Println("\x1b[31;1m", "✕", "\x1b[0m\t", test.exp)
+			fmt.Println("\tExpression Value:", test.exp)
 		}
 	}
 
