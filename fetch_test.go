@@ -286,7 +286,10 @@ func BenchmarkFetchParseOnce(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		Run(l, umsg)
+		_, err := Run(l, umsg)
+		if err != nil {
+			fmt.Println(".")
+		}
 	}
 }
 
@@ -297,17 +300,45 @@ func BenchmarkNoFetch(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		o, _ := umsg.(map[string]interface{})
-		f, _ := o["arrayObj"]
-		d, _ := f.([]interface{})
-		s := d[2]
-		a, _ := s.(map[string]interface{})
-		z, _ := a["nested"]
-		x, _ := z.([]interface{})
-		c := x[0]
-		v, _ := c.(map[string]interface{})
-		_, ok := v["id"]
+		o, ok := umsg.(map[string]interface{})
 		if !ok {
+			fmt.Println(".")
+		}
+		f, ok := o["arrayObj"]
+		if !ok {
+			fmt.Println(".")
+		}
+		d, ok := f.([]interface{})
+		if !ok {
+			fmt.Println(".")
+		}
+		if 2 > len(d) {
+			fmt.Println(".")
+		}
+		s := d[2]
+		a, ok := s.(map[string]interface{})
+		if !ok {
+			fmt.Println(".")
+		}
+		z, ok := a["nested"]
+		if !ok {
+			fmt.Println(".")
+		}
+		x, ok := z.([]interface{})
+		if !ok {
+			fmt.Println(".")
+		}
+		if 0 > len(x) {
+			fmt.Println(".")
+		}
+		c := x[0]
+		v, ok := c.(map[string]interface{})
+		if !ok {
+			fmt.Println(".")
+		}
+		_, ok = v["id"]
+		if !ok {
+			fmt.Println(".")
 		}
 	}
 }
@@ -369,7 +400,7 @@ func BenchmarkNoFetchNoCheck(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		o := umsg.ArrayObj[2].Nested[0].Id
-		if o == "id" {
+		if o != "" {
 		}
 	}
 }
