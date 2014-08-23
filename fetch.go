@@ -360,10 +360,10 @@ func indexValue(o interface{}, index int) (interface{}, error) {
 }
 
 // Converts a query string into a *Fetch.Query.
-// Fetch.Parse is similar to jq, in that in order to reference the base object,
+// Fetch.Parse is similar to jq, in that in order to reference the base value,
 // you must begin a query with '.'
-// For example, a query string of '.' will return an entire object, a query string
-// of '.foo' will return the value of key foo on the root of the object. Every
+// For example, a query string of '.' will return an entire value, a query string
+// of '.foo' will return the value of key foo on the root of the value. Every
 // subsequent field can be accessed through javascript-style dot/bracket notation.
 // for example, .foo[0] would return the first element of array foo, and
 // .["foo"][0] would do the same as well.
