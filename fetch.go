@@ -403,7 +403,9 @@ func Run(l *query, o interface{}) (interface{}, error) {
 	return o, nil
 }
 
-// A convenience that runs both Parse() and Run() automatically.
+// A convenience function that runs both Parse() and Run() automatically.
+// It is highly recommended that you parse your query ahead of time 
+// with Fetch.Parse() and follow up with Fetch.Run() instead.
 func Fetch(input string, obj interface{}) (interface{}, error) {
 	l, err := Parse(input)
 	if err != nil {
