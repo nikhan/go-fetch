@@ -1,6 +1,8 @@
 go-fetch
 =====
 
+![](http://4.bp.blogspot.com/-s_I4bwEz5BM/U2TpMsooVHI/AAAAAAAAAoQ/xQ3_ucCa7aU/s1600/fetch-mean-girls-quote-so-fetch-thats-so-fetch-Favim.com-372000.gif)
+
 A small library that affords the use of simple jq/javascript/python-style accessors on nested interface{}s. It is designed to be primarily used in a situations where you need to run the same query over a large amounts of inconsistant data.
 
 For example, given a map with the following structure:
