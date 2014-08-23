@@ -27,7 +27,7 @@ go-fetch supports bracket accessors for maps as well, so if you need to access a
 result, err := Fetch.Fetch(`.["foo"].bar[2]`, obj)
 ```
 
-`Fetch.Fetch()`  is a convenience function and if performance is a concern it is highly recommended that you parse your query ahead of time with `Fetch.Parse()` and follow up with `Fetch.Run()` instead. 
+`Fetch.Fetch()`  is a convenience function that runs both `Fetch.Parse()` and `Fetch.Run()`. If you have a sitution where you will be running the same query over lots of values it is highly reccomended that you `Fetch.Parse()` your query once and `Fetch.Run()` each value.
 
 ```
 query, _ := Fetch.Parse(`.["stop.trying"].to[0].make.fetch.happen`)
