@@ -21,7 +21,7 @@ result, err := Fetch.Fetch(".foo.bar[2]", obj)
 ```
 All queries must start with `.`, as this refers to the root of the value that is passed to go-fetch. Making a query `.` will return the entire value itself.
 
-go-fetch supports bracket accessors for maps, so if you need to access a key that has characters that need to be avoided (such as a `.,#,$,*,%,!`), you can do so:
+go-fetch supports bracket accessors for maps, so if you need to access a key that has characters that need to be avoided (such as a `.`,`#`,`$`,`*`,`%`,`!`), you can do so:
 
 ```
 result, err := Fetch.Fetch(`.["foo"].bar[2]`, obj)
