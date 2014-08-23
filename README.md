@@ -3,7 +3,7 @@ go-fetch
 
 ![](http://4.bp.blogspot.com/-s_I4bwEz5BM/U2TpMsooVHI/AAAAAAAAAoQ/xQ3_ucCa7aU/s1600/fetch-mean-girls-quote-so-fetch-thats-so-fetch-Favim.com-372000.gif)
 
-A small library that affords the use of simple jq/javascript/python-style accessors on nested interface{}s. It is designed to be primarily used in a situations where you need to run the same query over a large amounts of inconsistant data.
+A small library that affords the use of simple jq/javascript/python-style accessors on nested interface{}s. go-fetch is *not* a replacement for properly unmarshalling JSON into  approriate structs and is intended to be used in situations where an embedded data-accessing/querying is needed.
 
 For example, given a map with the following structure:
 
