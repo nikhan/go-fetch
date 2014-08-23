@@ -19,15 +19,15 @@ the second element of `bar` can be accessed by:
 ```
 result, err := Fetch.Fetch(".foo.bar[2]", obj)
 ```
-All queries must start with `.`, as this is refers to the value that is passed to go-fetch. Making a query of simple `.` will return the entire value itself.
+All queries must start with `.`, as this refers to the root of the value that is passed to go-fetch. Making a query `.` will return the entire value itself.
 
-go-fetch supports bracket accessors for maps as well, so if you need to access a key that has characters (such as a `.`) that need to be avoided, you can do so:
+go-fetch supports bracket accessors for maps, so if you need to access a key that has characters that need to be avoided (such as a `.,#,$,*,%,!`), you can do so:
 
 ```
 result, err := Fetch.Fetch(`.["foo"].bar[2]`, obj)
 ```
 
-`Fetch.Fetch()`  is a convenience function that runs both `Fetch.Parse()` and `Fetch.Run()`. If you have a sitution where you will be running the same query over lots of values it is highly reccomended that you `Fetch.Parse()` your query once and `Fetch.Run()` each value.
+`Fetch.Fetch()`  is a convenience function that runs both `Fetch.Parse()` and `Fetch.Run()`. If you have a sitution where you will be running the same query over lots of values it is highly reccomended that you `Fetch.Parse()` your query once and `Fetch.Run()` each value that needs to be queried. 
 
 ```
 query, _ := Fetch.Parse(`.["stop.trying"].to[0].make.fetch.happen`)
