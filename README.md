@@ -3,7 +3,7 @@ go-fetch
 
 ![](http://4.bp.blogspot.com/-s_I4bwEz5BM/U2TpMsooVHI/AAAAAAAAAoQ/xQ3_ucCa7aU/s1600/fetch-mean-girls-quote-so-fetch-thats-so-fetch-Favim.com-372000.gif)
 
-A small library that affords the use of simple jq/javascript/python-style accessors on nested interface{}s. go-fetch is *not* a replacement for properly unmarshalling JSON into  approriate structs and is intended to be used in situations where embedded data-accessing/querying is needed.
+A small library that affords the use of simple jq/javascript/python-style accessors on nested interface{}s. go-fetch is *not* a replacement for properly unmarshalling JSON into appropriate structs and is intended to be used in situations where embedded data-accessing/querying is needed.
 
 For example, given a map with the following structure:
 
@@ -27,7 +27,7 @@ go-fetch supports bracket accessors for maps, so if you need to access a key tha
 result, err := Fetch.Fetch(`.["foo"].bar[2]`, obj)
 ```
 
-`Fetch.Fetch()`  is a convenience function that runs both `Fetch.Parse()` and `Fetch.Run()`. If you have a sitution where you will be running the same query over lots of values it is highly recommended that you `Fetch.Parse()` your query once and `Fetch.Run()` each value that needs to be queried. 
+`Fetch.Fetch()`  is a convenience function that runs both `Fetch.Parse()` and `Fetch.Run()`. If you have a situation where you will be running the same query over lots of values it is highly recommended that you `Fetch.Parse()` your query once and `Fetch.Run()` each value that needs to be queried. 
 
 ```
 query, _ := Fetch.Parse(`.["stop.trying"].to[0].make.fetch.happen`)
