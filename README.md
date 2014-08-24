@@ -14,7 +14,7 @@ For example, given a map with the following structure:
     }
 }
 ```
-the second element of `bar` can be accessed by:
+the third element of `bar` can be accessed by:
 
 ```
 result, err := Fetch.Fetch(".foo.bar[2]", obj)
