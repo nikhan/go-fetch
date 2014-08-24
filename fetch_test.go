@@ -168,6 +168,15 @@ var FailTests = []FailTest{
 		exp: `.[[][]]`,
 	},
 	FailTest{
+		exp: `.[""]`,
+	},
+	FailTest{
+		exp: `.[x]`,
+	},
+	FailTest{
+		exp: `.[?]`,
+	},
+	FailTest{
 		exp: `"jdsjdskdjsjs`,
 	},
 	FailTest{
