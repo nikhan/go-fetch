@@ -42,7 +42,7 @@ var ident = map[int]string{
 const eof = -1
 
 type itemType int
-type stateFn func(*query) stateFn
+type stateFn func(*Query) stateFn
 
 type item struct {
 	typ itemType
@@ -58,7 +58,7 @@ type field struct {
 	key   string
 }
 
-type query struct {
+type Query struct {
 	state   stateFn
 	pos     int
 	width   int
@@ -69,13 +69,13 @@ type query struct {
 	fields  []field
 }
 
-func (l *query) run() {
+func (l *Query) run() {
 	for l.state = startLex; l.state != nil; {
 		l.state = l.state(l)
 	}
 }
 
-func (l *query) next() rune {
+func (l *Query) next() rune {
 	if int(l.pos) >= len(l.input) {
 		l.width = 0
 		return eof
@@ -86,31 +86,31 @@ func (l *query) next() rune {
 	return r
 }
 
-func (l *query) peek() rune {
+func (l *Query) peek() rune {
 	r := l.next()
 	l.backup()
 	return r
 }
 
-func (l *query) backup() {
+func (l *Query) backup() {
 	l.pos -= l.width
 }
 
-func (l *query) emit(t itemType) {
+func (l *Query) emit(t itemType) {
 	l.items <- item{t, l.start, l.input[l.start:l.pos]}
 	l.start = l.pos
 }
 
-func (l *query) ignore() {
+func (l *Query) ignore() {
 	l.start = l.pos
 }
 
-func (l *query) errorf(format string, args ...interface{}) stateFn {
+func (l *Query) errorf(format string, args ...interface{}) stateFn {
 	l.items <- item{itemError, l.start, fmt.Sprintf(format, args...)}
 	return nil
 }
 
-func (l *query) accept(valid string) bool {
+func (l *Query) accept(valid string) bool {
 	if strings.IndexRune(valid, l.next()) >= 0 {
 		return true
 	}
@@ -118,13 +118,13 @@ func (l *query) accept(valid string) bool {
 	return false
 }
 
-func (l *query) acceptRun(valid string) {
+func (l *Query) acceptRun(valid string) {
 	for strings.IndexRune(valid, l.next()) >= 0 {
 	}
 	l.backup()
 }
 
-func startLex(l *query) stateFn {
+func startLex(l *Query) stateFn {
 	c := l.next()
 	switch {
 	case c == '[':
@@ -160,7 +160,7 @@ func startLex(l *query) stateFn {
 	return startLex
 }
 
-func lexField(l *query) stateFn {
+func lexField(l *Query) stateFn {
 Loop:
 	for {
 		switch r := l.next(); {
@@ -183,7 +183,7 @@ Loop:
 	return startLex
 }
 
-func lexQuote(l *query) stateFn {
+func lexQuote(l *Query) stateFn {
 Loop:
 	for {
 		switch l.next() {
@@ -202,7 +202,7 @@ Loop:
 	return startLex
 }
 
-func lexSQuote(l *query) stateFn {
+func lexSQuote(l *Query) stateFn {
 Loop:
 	for {
 		switch l.next() {
@@ -221,7 +221,7 @@ Loop:
 	return startLex
 }
 
-func lexNumber(l *query) stateFn {
+func lexNumber(l *Query) stateFn {
 	if !l.scanNumber() {
 		return l.errorf("bad number syntax: %q", l.input[l.start:l.pos])
 	}
@@ -229,7 +229,7 @@ func lexNumber(l *query) stateFn {
 	return startLex
 }
 
-func lexSpace(l *query) stateFn {
+func lexSpace(l *Query) stateFn {
 	for isSpace(l.peek()) {
 		l.next()
 	}
@@ -237,7 +237,7 @@ func lexSpace(l *query) stateFn {
 	return startLex
 }
 
-func (l *query) atTerminator() bool {
+func (l *Query) atTerminator() bool {
 	r := l.peek()
 	if isSpace(r) || isEndOfLine(r) {
 		return true
@@ -249,7 +249,7 @@ func (l *query) atTerminator() bool {
 	return false
 }
 
-func (l *query) runField() error {
+func (l *Query) runField() error {
 	accessor := false
 	pos := 0
 	var i *field
@@ -312,13 +312,13 @@ func (l *query) runField() error {
 	return nil
 }
 
-func (l *query) nextItem() item {
+func (l *Query) nextItem() item {
 	item := <-l.items
 	l.lastPos = item.pos
 	return item
 }
 
-func (l *query) scanNumber() bool {
+func (l *Query) scanNumber() bool {
 	digits := "0123456789"
 	l.acceptRun(digits)
 	return true
@@ -367,8 +367,8 @@ func indexValue(o interface{}, index int) (interface{}, error) {
 // subsequent field can be accessed through javascript-style dot/bracket notation.
 // for example, .foo[0] would return the first element of array foo, and
 // .["foo"][0] would do the same as well.
-func Parse(input string) (*query, error) {
-	l := &query{
+func Parse(input string) (*Query, error) {
+	l := &Query{
 		input:  input,
 		items:  make(chan item),
 		fields: []field{},
@@ -384,7 +384,7 @@ func Parse(input string) (*query, error) {
 }
 
 // Executes a *Fetch.Query on some data. Returns the result of the query.
-func Run(l *query, o interface{}) (interface{}, error) {
+func Run(l *Query, o interface{}) (interface{}, error) {
 	var err error
 	for _, v := range l.fields {
 		switch v.typ {
