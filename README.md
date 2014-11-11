@@ -3,6 +3,8 @@ go-fetch
 
 A small library that affords the use of simple jq/javascript/python-style accessors on nested interface{}s. go-fetch is *not* a replacement for properly unmarshalling JSON into appropriate structs and is intended to be used in situations where embedded data-accessing/querying is needed.
 
+Documentation available at [http://godoc.org/github.com/nikhan/go-fetch].
+
 For example, given a map with the following structure:
 
 ```
