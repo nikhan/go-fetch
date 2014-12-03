@@ -124,6 +124,10 @@ func (l *Query) acceptRun(valid string) {
 	l.backup()
 }
 
+func (l *Query) String() string {
+	return l.input
+}
+
 func startLex(l *Query) stateFn {
 	c := l.next()
 	switch {

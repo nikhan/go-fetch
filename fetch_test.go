@@ -224,6 +224,17 @@ func TestAll(t *testing.T) {
 	testFile, _ := ioutil.ReadFile("test.json")
 	json.Unmarshal(testFile, &m)
 
+	q := `.['arrayObj'][2]['nested'][0]['id']`
+	l, err := Parse(q)
+	if err != nil {
+		t.Fail()
+	}
+	if l.String() != q {
+		t.Fail()
+		fmt.Println("Expected Value", q)
+	}
+	fmt.Println("\x1b[32;1m✓\x1b[0m", "String()")
+
 	for _, test := range Tests {
 		err := json.Unmarshal([]byte(test.result), &r)
 		if err != nil {
