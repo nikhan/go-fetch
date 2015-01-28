@@ -128,6 +128,10 @@ func (l *Query) String() string {
 	return l.input
 }
 
+func (l *Query) MarshalJSON() ([]byte, error) {
+	return []byte("\"" + l.input + "\""), nil
+}
+
 func startLex(l *Query) stateFn {
 	c := l.next()
 	switch {
