@@ -261,7 +261,7 @@ func (l *Query) runField() error {
 	accessor := false
 	pos := 0
 	var i *field
-	for pos < len(l.input) {
+	for pos <= len(l.input) {
 		c := l.nextItem()
 
 		switch c.typ {
